@@ -89,12 +89,12 @@ int main(){
             case 'G':
                 if(energy < 15){
                     printf("Kesfe cikacak enerjin yok.\n");
-                    break;
+                    continue;
                 }
                 // [G] Keşif görevi işlemleri
                 int border;
                 int random_discovery_number = rand() % 100;
-                int random_material_number = (rand() % 8) + 1;
+                int random_material_number = (rand() % 9) + 1;
                 energy -= 15;
                 oxygen -= 10;
                 
@@ -109,7 +109,7 @@ int main(){
                 if (random_discovery_number < border) {
                     printf("Birsey bulamadin.\n");
                 }
-                else if (random_discovery_number > border && random_discovery_number <= 70) {
+                else if (random_discovery_number >= border && random_discovery_number <= 70) {
                     printf("%d adet yedek parca buldun!\n", random_material_number);
                     spare_part = spare_part + random_material_number;
                 }
@@ -128,11 +128,11 @@ int main(){
             case 'O':
                 if(water < 2){
                     printf("Yeteri kadar su yok.\n");
-                    break;
+                    continue;
                 }
                 else if(energy <= 10){
                     printf("Yeterince enerjin yok.\n");
-                    break;
+                    continue;
                 }
                 // [O] Oksijen üretme işlemleri
                 int i, j;
@@ -141,7 +141,7 @@ int main(){
                 scanf("%d", &i);
                 if((i > water || i < 2)){
                     printf("Paneldeki su miktarindan fazlasi girilemez.\n");
-                    break;
+                    continue;
                 }
                 j = i - (i % 2);
                 water = water - j;
@@ -155,28 +155,32 @@ int main(){
             case 't':
             case 'T':
                 // [T] Modül tamir işlemleri
+                int notification;
                 if(module_damage == 0){
                     printf("Onarilacak bir modul hasari yok.\n");
-                    break;
+                    continue;
                 }
-                else if(module_damage <= 40 && spare_part >= 2){
+                else if(module_damage <= 40 && spare_part >= 4){
                     printf("Tehdit seviyesi dusuk modul hasari onarildi!\n");
-                    spare_part -= 2;
+                    spare_part -= 4;
                     module_damage -= 15;
                 }
-                else if(module_damage > 40 && module_damage < 80 && spare_part >= 3){
+                else if(module_damage > 40 && module_damage < 80 && spare_part >= 5){
                     printf("Tehdit seviyesi orta modul hasari onarildi!\n");
-                    spare_part -= 3;
+                    spare_part -= 5;
                     module_damage -= 20;
                 }
-                else if(module_damage >= 80 && module_damage <= 100 && spare_part >= 4){
+                else if(module_damage >= 80 && module_damage <= 100 && spare_part >= 6){
                     printf("Tehdit seviyesi yuksek modul hasari onarildi!\n");
-                    spare_part -= 4;
+                    spare_part -= 6;
                     module_damage -= 25;
                 }
                 else {
-                    printf("Yeterli parcaniz yok!\n");
-                    break;
+                    if(module_damage <= 40){notification = 4;}
+                    else if(module_damage > 40 && module_damage < 80){notification = 5;}
+                    else if(module_damage >= 80 && module_damage <= 100){notification = 6;}
+                    printf("Yeterli parcaniz yok! (Gerekli parca sayisi: %d)\n", notification);
+                    continue;
                 }
                 round++;
                 break;
@@ -184,13 +188,19 @@ int main(){
             case 'u':
             case 'U':
                 // [U] Uyku ayarları
-                if(oxygen < 20){
-                    health -= 5;
-                    energy += 20;
+                if(energy == 100){
+                    printf("Enerjin doluyken uyuyamazsin.\n");
+                    continue;
                 }
                 else {
-                    health += 5;
-                    energy += 20;
+                    if(oxygen < 20){
+                        health -= 5;
+                        energy += 20;
+                    }
+                    else {
+                        health += 5;
+                        energy += 20;
+                    }
                 }
 
                 oxygen -= 5;
@@ -203,7 +213,7 @@ int main(){
                 int damaged_rounds = 0;
                 int lost_health = 0;
                 int lost_oxygen = 0;
-                int storm_border = (module_damage < 50 && energy > 30) ? 40 : 65;
+                int storm_border = module_damage < 50 ? 40 : 65;
 
                 printf("\n>> [ALARM] Kum firtinasi basladi! Toplam %d tur surecek.\n", sandstorm_round);
 
@@ -270,11 +280,11 @@ int main(){
                 // [H] Hava kilidi şifresi
                 if (lock == 1){
                     printf("Hava kilidi muhurlu.\n");
-                    break;
+                    continue;
                 }
                 else if(energy < 10){
                     printf("Yeterince enerjin yok.\n");
-                    break;
+                    continue;
                 }
 
                 char password = 'A' + (day % 26);
@@ -300,6 +310,7 @@ int main(){
                         energy -= 5;
                         chance -= 1;
                     }
+                    // Oyuncuyu yönlendirme
                     if(guess > password){
                         printf("Geriye git.\n");
                     }
@@ -337,17 +348,17 @@ int main(){
                     printf("[OK] TUM SISTEMLER NORMAL!\n");
                 }
                 printf("--------------------------------------------------------\n");
-                break;
+                continue;
 
             case 'q':
             case 'Q':
                 // [Q] Çıkış yolu
                 printf("\n>> [SISTEM] Simulasyondan cikis yapiliyor...\n");
-                break;
+                continue;
 
             default:
                 printf("\n>> [HATA] Tanimsiz komut girdiniz! Lutfen gecerli bir komut secin.\n");
-                break;
+                continue;
     }
 
     // Tur geçiş kontrolcüsü

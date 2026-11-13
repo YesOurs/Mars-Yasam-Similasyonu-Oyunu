@@ -72,8 +72,8 @@ Projeyi kendi bilgisayarınızda derlemek ve çalıştırmak için bir C derleyi
 
 1. **Depoyu klonlayın:**
    ```bash
-   git clone https://github.com/KULLANICI_ADINIZ/REPO_ADINIZ.git
-   cd REPO_ADINIZ
+   git clone https://github.com/YesOurs/Mars-Yasam-Similasyonu-Oyunu.git
+   cd Mars-Yasam-Similasyonu-Oyunu
    ```
 
 2. **Kodu derleyin (GCC örneği):**

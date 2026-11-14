@@ -27,7 +27,7 @@ Simülatör, oyuncunun verdiği tek karakterlik komutlara göre istasyonun ve m�
 
 ---
 
-## 🎚️ Zorluk Seviyeleri
+## ⚔️ Zorluk Seviyeleri
 
 Oyun başlangıcında `do-while` doğrulama döngüsü ve `switch-case` yapısı ile oyuncudan bir zorluk seviyesi seçmesi istenir. Seçilen seviyeye göre başlangıç kaynakları ve kum fırtınası süresi değişmektedir:
 

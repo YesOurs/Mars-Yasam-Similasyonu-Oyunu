@@ -3,6 +3,7 @@
 #include <time.h>
 
 int main(){
+    // Rastgele sayı üretmek için
     srand(time(NULL));
 
     // Değişkenler
@@ -35,7 +36,7 @@ int main(){
 
     // Zorluk Ayarları
     switch (difficult)
-    {
+    { // Fall-through yapısı ile büyük/küçük harf duyarsızlığı
     case 'K':
     case 'k':
         health = energy = oxygen = 100;
@@ -106,6 +107,7 @@ int main(){
 
                 printf("Zar: %d / Esik: %d -> %s\n", random_discovery_number, border, (random_discovery_number >= border) ? "BASARILI" : "BASARISIZ");
 
+                // Keşif sonuçları: Eli boş dönme, yedek parça bulma veya su bulma
                 if (random_discovery_number < border) {
                     printf("Birsey bulamadin.\n");
                 }
@@ -143,10 +145,11 @@ int main(){
                     printf("Paneldeki su miktarindan fazlasi girilemez.\n");
                     continue;
                 }
+                // Mod (%) operatörü ile kalan kısım girilen miktardan çıkarılır ve yeni bir değişkene aktarılır 
                 j = i - (i % 2);
                 water = water - j;
                 oxygen = oxygen + 3 * j / 2;
-                energy = energy - 10;
+                energy -= 10;
                 printf("%d mol oksijen uretildi!\n", 3 * j / 2);
                 
                 round++;
@@ -223,7 +226,7 @@ int main(){
 
                     printf("\n--- [Firtina Turu %d/%d] ---\n", i, sandstorm_round);
 
-                    if (i % 2 == 0) {
+                    if (i % 2 == 0) { // Mod operatörü ile çift numaralı turlarda rüzgar şiddeti ve hasar 2 katına 
                         critical_damage = 2;
                         printf(">> [SIDDETLI RUZGAR] Cift numarali tur! Hasar etkileri 2 katina cikti.\n");
                     }
@@ -287,7 +290,7 @@ int main(){
                     continue;
                 }
 
-                char password = 'A' + (day % 26);
+                char password = 'A' + (day % 26); // ASCII aritmetiği ve mod operatörü ile o anki gün sayısından şifre belirlenir
                 char guess;
                 int chance = 3;
 
@@ -384,6 +387,7 @@ int main(){
 
     int point = (day * 100) + health + oxygen - module_damage;
 
+    // Oyun sonu raporu
     printf("\n########################################################\n");
     printf("                   SIMULASYON SONA ERDI                 \n");
     printf("########################################################\n");
